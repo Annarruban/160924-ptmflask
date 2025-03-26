@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Mapped, mapped_column
-
+from models.category import Category
 from models import db
 
 
@@ -15,8 +15,14 @@ class Question(db.Model):
     text: Mapped[str] = mapped_column(
         db.String(255),
     )
-
     answers: Mapped[list['Answer']] = db.relationship('Answer', back_populates='question')
+    category_id: Mapped[int] = mapped_column(
+        db.Integer,
+        db.ForeignKey('category.id'),
+    )
+    category: Mapped['Category'] = db.relationship('Category', back_populates=
+    'question'
+    )
 
     def __repr__(self):
         return f'Question: {self.text}'
@@ -38,6 +44,8 @@ class Statistic(db.Model):
         db.Integer,
         default=0
     )
+
+
 
     def __repr__(self):
         return '<Statistic for Question {}: {} agree, {} disagree>'.format(
