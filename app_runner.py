@@ -2,6 +2,7 @@ from flask import Flask
 from flask_migrate import Migrate
 
 from config import DevelopmentConfig
+from routers.categories import categories_bp
 from routers.questions import questions_bp
 from routers.answers import answers_bp
 from models import db
@@ -15,5 +16,6 @@ def create_app() -> Flask:
     migrate.init_app(app=app, db=db)
     app.register_blueprint(questions_bp, url_prefix="/questions")
     app.register_blueprint(answers_bp, url_prefix="/answers")
+    app.register_blueprint(categories_bp, url_prefix="/categories")
 
     return app
